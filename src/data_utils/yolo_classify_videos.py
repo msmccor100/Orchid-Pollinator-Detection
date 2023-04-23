@@ -1,11 +1,11 @@
 """
-This script takes a directory of yolo predicted labels for image frames take from videos and classifies the
-videos according to the pollinator classes they contain and whether the pollinate an inflorescence. It 
+This script takes a directory of yolo predicted labels for image frames taken from videos and classifies the
+videos according to the pollinator classes they contain and whether they pollinate an inflorescence. It 
 assumes yolo formated label files have names of the following form:
 
     <video base name>_<count>.txt
 
-This is name expectation is consistent with using split_videos.py to split videos into frames and then
+This name expectation is consistent with using split_videos.py to split videos into frames and then
 using YOLOv7's detect.py to produce labels. This script outputs a csv file with lines like:
 
     <video base name>,(<class number 1>,yes),(<class number 2>,no)
@@ -18,7 +18,7 @@ A pollinator of class number 2 is also found, but it does not visit an infloresc
 example, no pollinators were found in the video.
 
 This script takes a motion threshold, a list of class numbers to which it applies, and an overlap 
-threshold which specifies how much boundingi box overlap there must be to count a pollinator as visiting 
+threshold which specifies how much bounding box overlap there must be to count a pollinator as visiting 
 an inflorescence.
 
 The motion threshold specifies how big the standard deviation of the distances of the pollinator bounding
@@ -31,10 +31,11 @@ Call is: yolo_classify_videos.py <labels dir> <outfile path> <motion threshold> 
 pollinator bounding boxes from the median of these, treating the image as a unit square. If the pollinator 
 strays a lot from their median position, they'll pass the threshold.
 
-<classes> is a quoted, comma delimiated string, like "0,1,2,4,6,7"
+<classes> is a quoted, comma delimited string, like "0,1,2,4,6,7". this specifies what classes we want
+the motion threshold to apply to.
 
-<overlap> is between 0 and 1 represents the relative portion of the pollinator's boundbox that must overlap 
-with an inflorescence in order to count that as pollinating.
+<overlap> is between 0 and 1 represents the relative portion of the pollinator's bounding box that must overlap 
+with an inflorescence in order to count that as pollinating, i.e. it is (area of overlap)/(area pollinator BB).
 """
 
 import os
